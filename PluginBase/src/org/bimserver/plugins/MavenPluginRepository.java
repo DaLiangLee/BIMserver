@@ -60,15 +60,14 @@ public class MavenPluginRepository {
 		system = newRepositorySystem();
 		session = newRepositorySystemSession(system, localRepoFile);
 
-		Proxy proxy = proxySelector.getProxy(defaultLocalRepositoryLocation);
-
 		RemoteRepository.Builder builder = new RemoteRepository.Builder("central", "default", defaultRemoteRepositoryLocation);
 		builder.setPolicy(new RepositoryPolicy(true, RepositoryPolicy.UPDATE_POLICY_INTERVAL + ":60", RepositoryPolicy.CHECKSUM_POLICY_FAIL));
-		repositories.add(builder.setProxy(proxy).build());
+		repositories.add(builder.setProxy(proxySelector.getProxy(defaultRemoteRepositoryLocation)).build());
 
-		builder = new RemoteRepository.Builder("github", "default", "http://repo.logic-labs.nl.s3.amazonaws.com/release");
+		String amazonURL = "http://repo.logic-labs.nl.s3.amazonaws.com/release";
+		builder = new RemoteRepository.Builder("github", "default", amazonURL);
 		builder.setPolicy(new RepositoryPolicy(true, RepositoryPolicy.UPDATE_POLICY_INTERVAL + ":60", RepositoryPolicy.CHECKSUM_POLICY_IGNORE));
-		repositories.add(builder.setProxy(proxy).build());
+		repositories.add(builder.setProxy(proxySelector.getProxy(amazonURL)).build());
 
 		if (defaultLocalRepositoryLocation != null) {
 			RemoteRepository.Builder localRepoBuilder = new RemoteRepository.Builder("local", "default", "file://" + defaultLocalRepositoryLocation);
