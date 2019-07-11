@@ -38,8 +38,10 @@ import org.eclipse.aether.spi.connector.RepositoryConnectorFactory;
 import org.eclipse.aether.spi.connector.transport.TransporterFactory;
 import org.eclipse.aether.transport.file.FileTransporterFactory;
 import org.eclipse.aether.transport.http.HttpTransporterFactory;
+import org.jetbrains.idea.maven.aether.JreProxySelector;
 
 public class RemotePluginRepository {
+	static JreProxySelector proxySelector = new JreProxySelector();
 	public static void main(String[] args) throws ArtifactResolutionException {
 		System.out.println("------------------------------------------------------------");
 		System.out.println(RemotePluginRepository.class.getSimpleName());
@@ -91,6 +93,7 @@ public class RemotePluginRepository {
 
 		session.setTransferListener(new ConsoleTransferListener());
 		session.setRepositoryListener(new ConsoleRepositoryListener());
+		session.setProxySelector(proxySelector);
 
 		// uncomment to generate dirty trees
 		// session.setDependencyGraphTransformer( null );
@@ -103,7 +106,8 @@ public class RemotePluginRepository {
 	}
 
 	private static RemoteRepository newCentralRepository() {
-		return new RemoteRepository.Builder("central", "default", "http://central.maven.org/maven2/").build();
+		String url = "http://central.maven.org/maven2/";
+		return new RemoteRepository.Builder("central", "default", url).setProxy(proxySelector.getProxy(url)).build();
 	}
 
 }
