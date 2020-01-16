@@ -650,13 +650,13 @@ function Setup(cd, address) {
 				var artifactId = $(checkbox).attr("class");
 				if (artifactId == "bimviews") {
 					pluginsToInstall["bimsurfer"] = {
-						repository: "http://central.maven.org/maven2",
+						repository: "https://repo1.maven.org/maven2/",
 						groupId: "org.opensourcebim",
 						artifactId: "bimsurfer"
 					};
 				}
 				pluginsToInstall[artifactId] = {
-					repository: "http://central.maven.org/maven2",
+					repository: "https://repo1.maven.org/maven2",
 					groupId: "org.opensourcebim",
 					artifactId: artifactId
 				};

@@ -50,7 +50,7 @@ public class MavenPluginRepository {
 	private RemoteRepository local;
 	
 	public MavenPluginRepository(Path localRepoFile) {
-		this(localRepoFile, "http://central.maven.org/maven2", "~/.m2");
+		this(localRepoFile, "https://repo1.maven.org/maven2/", "~/.m2");
 	}
 	
 	public MavenPluginRepository(Path localRepoFile, String defaultRemoteRepositoryLocation, String defaultLocalRepositoryLocation) {
